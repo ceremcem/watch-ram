@@ -1,0 +1,9 @@
+#!/bin/bash
+#sudo lxc-ls \
+#	| xargs printf '%s\n' \
+#	| sudo xargs -I{} bash -c \
+#		'lxc-info -n {}; echo -----------------------'
+for c in `lxc-ls`; do
+	ram=$(lxc-info -n $c | grep Memory | awk '{print $3 " " $4}')
+	[[ -n $ram ]] && echo "$c: $ram"
+done
